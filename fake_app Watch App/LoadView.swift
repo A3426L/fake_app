@@ -8,13 +8,25 @@
 import SwiftUI
 
 struct LoadView: View {
+    @State var randomNumber = 1
+    @State var str = ""
+    @State var bool = false
     var body: some View {
         VStack{
-            Button("Back"){
+            Text(str)
+            Button("print result"){
+                calculate_temp()
             }
-            Text("a")
         }
+
+
     }
+    
+    func calculate_temp(){
+        randomNumber = Int.random(in: 2...8)
+        str = "36.\(randomNumber)"
+    }
+
 }
 
 struct LoadView_Previews: PreviewProvider {
