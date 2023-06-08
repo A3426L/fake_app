@@ -10,21 +10,37 @@ import SwiftUI
 struct ContentView: View {
     @State var randomNumber = 1
     @State var str = "waitting..."
+    @State var progressValue = 0.0
+    @State var isshowLoadView = false
+    @State var isLoad = false
     
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
+            
+            
             Text(str)
                 .padding()
-            Button("Button"){
+            Button("Take your temperture"){
+                //isshowLoadView = true
                 print("Button pushed")
-                randomNumber = Int.random(in: 2...8)
-                str = "36.\(randomNumber)"
+                isLoad = true
+                //calculate_temp()
+            }
+            .overlay{
+                if isLoad{
+                    ZStack{
+                        Color(.black)
+                        ProgressView("\(Int(progressValue))%", value: progressValue, total: 100)
+                            .progressViewStyle(CircularProgressViewStyle())
+                    }
+                }
             }
         }
-        //.padding()
+    }
+
+    func calculate_temp(){
+        randomNumber = Int.random(in: 2...8)
+        str = "36.\(randomNumber)"
     }
 }
 
