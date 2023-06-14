@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WatchConnectivity
 
 struct ContentView: View {
     @State var str = "aiueo"
