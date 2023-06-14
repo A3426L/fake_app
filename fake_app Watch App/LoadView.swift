@@ -10,21 +10,38 @@ import SwiftUI
 struct LoadView: View {
     @State var randomNumber:Int = 1
     @State var str = "result"
+    @State var disp = "unknown"
     @State var bool = false
     @State var mode:String = "normal"
+    
     var body: some View {
-        VStack{
-            Text(str)
-        }.onAppear{
-            if mode == "normal"{
+        NavigationStack{
+            ZStack{
+                if mode == "normal"{
+                    Color.green
+                        .ignoresSafeArea()
+                }else if mode == "fake"{
+                    Color.red
+                        .ignoresSafeArea()
+                }
+                Text(str)
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
+            }.onAppear{
                 calculate_temp()
             }
+            .toolbarBackground(.visible, for: .navigationBar)
         }
     }
     
     func calculate_temp(){
-        randomNumber = Int.random(in: 2...8)
-        str = "36.\(randomNumber)"
+        if mode == "normal"{
+            randomNumber = Int.random(in: 2...8)
+            str = "36.\(randomNumber)"
+        }else if mode == "fake"{
+            randomNumber = Int.random(in: 0...4)
+            str = "37.\(randomNumber)"
+        }
     }
 
 }

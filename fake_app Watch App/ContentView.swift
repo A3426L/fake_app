@@ -14,7 +14,7 @@ struct ContentView: View {
     @State var isLoadView:Bool = false
     @State var value = 0
     @State var mytimer:Timer!
-    
+
     var body: some View {
         NavigationStack(){
             ZStack{
@@ -35,16 +35,30 @@ struct ContentView: View {
                         }
                     }
                 }
+                    .font(.title)
+                    .bold()
+                    .frame(width: 150,height: 150)
+                    .foregroundColor(Color.black)
+                    .background(Color.yellow)
+                    .clipShape(Circle())
+                    .padding()
+                    .overlay(
+                        Circle()
+                            .stroke(Color.yellow,lineWidth:10)
+                    )
                 if isLoad{
                     Rectangle()
                         .foregroundColor(.black)
+                        .ignoresSafeArea()
                     ProgressView("\(Int(progressValue))%", value: progressValue, total: 100)
                         .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(2)
                 }
             }
             .navigationDestination(isPresented:$isLoadView){
                 LoadView()
             }
+            .toolbarBackground(.visible, for: .navigationBar)
         }
     }
 }
