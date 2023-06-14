@@ -8,57 +8,47 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var str = ""
+    @State var str = "aiueo"
     @State var progressValue = 0.0
     @State var isLoad = false
-    @State var isLoadView = false
+    @State var isLoadView:Bool = false
     @State var value = 0
+    @State var mytimer:Timer!
     
     var body: some View {
-            VStack{
-                Text(str)
-                ZStack{
-                    if isLoad{
-                        Rectangle()
-                            .foregroundColor(.black)
-                        ProgressView("\(Int(progressValue))%", value: progressValue, total: 100)
-                            .progressViewStyle(CircularProgressViewStyle())
-                        
-                        
-                    }
-                }
-                Button("take temp"){
-                    //.Text("Take your temperture")
-                    print("Button pushed")
+        NavigationStack(){
+            ZStack{
+                Button("Start"){
                     isLoad = true
                     str = "waitting...."
-                    Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+                    mytimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
                         if progressValue < 100 {
                             progressValue += 1
                             print(progressValue)
-                        }
-                        if progressValue == 100{
+                        }else if progressValue == 100{
+                            sleep(1)
                             isLoadView = true
-
+                            isLoad = false
+                            str = "result"
+                            mytimer.invalidate()
+                            progressValue = 0.0
                         }
                     }
                 }
-                .sheet(isPresented: $isLoadView){
-                    LoadView()
+                if isLoad{
+                    Rectangle()
+                        .foregroundColor(.black)
+                    ProgressView("\(Int(progressValue))%", value: progressValue, total: 100)
+                        .progressViewStyle(CircularProgressViewStyle())
                 }
             }
-            
-
-        
-
-    }
-
-
-    
-    func timer_count(){
-        progressValue += 1
+            .navigationDestination(isPresented:$isLoadView){
+                LoadView()
+            }
+        }
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

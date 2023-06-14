@@ -2,24 +2,24 @@
 //  LoadView.swift
 //  fake_app Watch App
 //
-//  Created by 山本聖留 on 2023/06/08.
+//  Created by A3426L on 2023/06/08.
 //
 
 import SwiftUI
 
 struct LoadView: View {
-    @State var randomNumber = 1
-    @State var str = ""
+    @State var randomNumber:Int = 1
+    @State var str = "result"
     @State var bool = false
+    @State var mode:String = "normal"
     var body: some View {
         VStack{
             Text(str)
-            Button("print result"){
+        }.onAppear{
+            if mode == "normal"{
                 calculate_temp()
             }
         }
-
-
     }
     
     func calculate_temp(){
@@ -30,6 +30,7 @@ struct LoadView: View {
 }
 
 struct LoadView_Previews: PreviewProvider {
+    @State static var isLoadView = true
     static var previews: some View {
         LoadView()
     }
